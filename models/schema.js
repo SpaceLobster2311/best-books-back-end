@@ -17,8 +17,8 @@ const userSchema = new Schema({
 
 
 // make a model from the schema
-const Book = mongoose.model('Book', bookSchema);
+// const Book = mongoose.model('Book', bookSchema);
 const User = mongoose.model('User', userSchema);
-module.exports = {User, Book};
+module.exports = {User};
 
 
