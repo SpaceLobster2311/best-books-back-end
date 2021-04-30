@@ -5,13 +5,13 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 app.use(cors());
 
-mongoose.connect('mongodb://localhost:27017/bookAPI', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb://localhost:27017/bookAPI', { useNewUrlParser: true, useUnifiedTopology: true });
 
 
 
 // intentionally requiring this model AFTER i run mongoose.connect
 
-const {User, Book} = require('./models/schema');
+const { User, Book } = require('./models/schema');
 
 // seed the database with some books so I can retrieve them
 
@@ -21,9 +21,9 @@ const PORT = process.env.PORT || 3001;
 
 // const myBook = new Book({bookName: '1984', bookDescription: 'scary', bookStatus: true});
 
-const myUser = new User ({
+const myUser = new User({
   userName: 'Michael',
-  favoriteBooks: [{ bookName: 'Antarctica 2041'}, {bookName: 'Where the wild things are'}, {bookName: 'War and Peace'}],
+  favoriteBooks: [{ bookName: 'Antarctica 2041' }, { bookName: 'Where the wild things are' }, { bookName: 'War and Peace' }],
   userEmail: 'michael3hendricks@gmail.com',
 });
 
@@ -37,29 +37,30 @@ const myUser = new User ({
 //   }
 // });
 
-// myUser.save(function(err) {
-//   if (err) {
-//     console.log(err);
-//   } else {
-//     console.log('user saved');
-//   }
-// });
+myUser.save(function (err) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log('user saved');
+  }
+});
 
 
 
-app.get('/',(req,res)=> {
+app.get('/', (req, res) => {
   res.send('hello bro');
 });
 
 
 
-app.get('/book',(req,res)=> {
-
+app.get('/book', (req, res) => {
+  let user = req.query.user;
+  console.log(user);
   // get all books from db
   // send them in response
-  User.find((err, databaseResults) => {
+  User.find( {userEmail: user}, (err, databaseResults) => {
     // send them in my response to front end
-    res.send(databaseResults);
+    res.send(databaseResults[0]);
   });
 });
 
