@@ -3,15 +3,15 @@ const { Schema } = mongoose;
 
 
 const bookSchema = new Schema({
-  bookName: {type: String},
-  bookDescription: {type: String},
-  bookStatus: {type: Boolean}
+  bookName: String,
+  bookDescription: String,
+  bookStatus: String,
 });
 
 const userSchema = new Schema({
-  userName: {type: String},
+  userName: String,
   favoriteBooks: [bookSchema],
-  userEmail: {type: String}
+  userEmail: String,
 });
 // by default mongoose will give us an id property
 
