@@ -74,8 +74,9 @@ app.post('/book', (req, res) => {
     if (userData.length < 1) {
       res.send(400).send('user does not exist');
     } else {//add book info to user
+      console.log(req.query.user);
       userData[0].favoriteBooks.push({
-        bookName: req.body.name,
+        bookName: req.body.bookName,
         bookDescription: req.body.description,
       });
       //save user
