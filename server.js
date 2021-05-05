@@ -12,7 +12,7 @@ mongoose.connect('mongodb://localhost:27017/bookAPI', { useNewUrlParser: true, u
 
 // intentionally requiring this model AFTER i run mongoose.connect
 
-const { User, Book } = require('./models/schema');
+const { User, } = require('./models/schema');
 
 // seed the database with some books so I can retrieve them
 
@@ -87,6 +87,16 @@ app.post('/book', (req, res) => {
   });
 
 
+});
+app.delete('/book/:id', (req, res) => {
+  let email = req.query.user;
+  User.find({ userEmail: email }, (err, userData) => {
+    let user = userData[0];
+    user.favoriteBooks = user.favoriteBooks.filter(book => `${book._id}` !== req.params.id);
+    user.save().then(userData => {
+      res.send(userData.favoriteBooks);
+    });
+  });
 });
 // route to get 1 user from db
 // app.get('/user', (req,res)=> {
