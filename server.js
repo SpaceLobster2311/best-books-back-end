@@ -65,6 +65,30 @@ app.get('/book', (req, res) => {
   });
 });
 
+app.put('/book', (req, res) =>{
+  //find the userName
+  let email = req.body.user;
+  User.find({userEmail: email}), (err, userData) => {
+    let BookId = req.params.id;
+    let user = userData[0];
+    user.book.forEach(books => {
+      if(`${books._id}` === BookId){
+        books.name = req.body.name;
+        books.description = req.body.description;
+      }
+    });
+    user.save().then(savedUserData => {
+      console.log('works');
+      res.send(savedUserData.books);
+    });
+  };
+  //update the books
+
+  //save the udated books
+  //send back the new data
+});
+
+
 app.post('/book', (req, res) => {
   let user = req.query.user;
   // uses app.json above
