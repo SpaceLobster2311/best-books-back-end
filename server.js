@@ -65,13 +65,14 @@ app.get('/book', (req, res) => {
   });
 });
 
-app.put('/book', (req, res) =>{
+app.put('/book/:id', (req, res) =>{
   //find the userName
   let email = req.body.user;
   User.find({userEmail: email}), (err, userData) => {
     let BookId = req.params.id;
     let user = userData[0];
-    user.book.forEach(books => {
+    console.log(user);
+    user.forEach(books => {
       if(`${books._id}` === BookId){
         books.name = req.body.name;
         books.description = req.body.description;
